@@ -1,0 +1,71 @@
+package Project4;
+import java.util.Scanner;
+import java.io.FileReader;
+import java.util.HashMap;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+/**
+* AddressDirectory class manages a record of ContactInformation objects.
+* It reads address entries from a file and search for an address by name.
+*/
+class AddressDirectory {
+private HashMap<String, ContactInformation> addressMap;
+/**
+* Constructs a new AddressDirectory with an empty record of address entries.
+*/
+public AddressDirectory() {
+addressMap = new HashMap<>();
+}
+/**
+* Reads address entries from a file and stores them in the address directory.
+* Each address entry has a name, street address, zip code, and phone number.
+*
+* @param filename file to be read from address entries.
+*/
+public void readAddress(String filename) {
+try (Scanner scanner = new Scanner(new FileReader(filename))) {
+while (scanner.hasNextLine()) {
+String lastName = scanner.nextLine().trim();
+String firstName = scanner.nextLine().trim();
+String streetAddress = scanner.nextLine().trim();
+int zipcode = Integer.parseInt(scanner.nextLine().trim());
+String phoneNumber = scanner.nextLine().trim();
+ContactInformation addressEntry = new ContactInformation(firstName,
+lastName, zipcode, streetAddress, phoneNumber);
+String key = firstName + " " + lastName;
+addressMap.put(key, addressEntry);
+}
+} catch (FileNotFoundException e) {
+System.out.println("Could not find the file " + filename + ". Exiting
+program.");
+System.exit(1);
+} catch (IOException e) {
+System.out.println("An error occurred while reading the file: " +
+e.getMessage());
+System.exit(1);
+}
+}
+/**
+* Starts a search interface where users can look up addresses by name.
+* The user is prompted until they choose to exit.
+*/
+public void SearchAddress() {
+Scanner scan = new Scanner(System.in);
+String key;
+do {
+System.out.print("Who would you like to search for (or enter -1 to exit
+program)? ");
+key = scan.nextLine().trim();
+if (!key.equals("-1")) {
+ContactInformation addressEntries = addressMap.get(key);
+if (addressEntries != null) {
+System.out.println(addressEntries);
+} else {
+System.out.println("Entry not found.");
+}
+}
+} while (!key.equals("-1"));
+System.out.println("Good bye.");
+scan.close();
+}
+}
