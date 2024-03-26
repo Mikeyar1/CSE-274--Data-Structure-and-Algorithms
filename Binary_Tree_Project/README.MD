@@ -19,6 +19,3 @@ This Java project implements a Binary Expression Tree to evaluate and print arit
 ### Installation
 
 Clone the repository to your local machine:
-
-```bash
-git clone https://github.com/yourusername/bet-project.git
