@@ -13,7 +13,7 @@ package TSP;
  */
 
 
-public class City {
+public class Cities {
     int x;
     int y;
 
